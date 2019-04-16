@@ -13,10 +13,10 @@ text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra 
 Vendor.destroy_all
 Listing.destroy_all
 
-Vendor.create(user_name: "Extreme Exotics", email: "ee@email.com")
-Vendor.create(user_name: "Snakes Plus", email: "sp@email.com")
-Vendor.create(user_name: "Lizards and More", email: "lm@email.com")
-Vendor.create(user_name: "Classy Cobras", email: "cc@email.com")
+Vendor.create(user_name: "ExtremeExotics", email: "ee@email.com", image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+Vendor.create(user_name: "SnakesPlus", email: "sp@email.com", image: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+Vendor.create(user_name: "LizardsandMore", email: "lm@email.com", image: "https://images.pexels.com/photos/462680/pexels-photo-462680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+Vendor.create(user_name: "ClassyCobras", email: "cc@email.com", image: "https://images.pexels.com/photos/814052/pexels-photo-814052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 
 images.each do |link|
   names = names.shuffle
