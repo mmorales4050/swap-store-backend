@@ -17,6 +17,7 @@ Vendor.create(user_name: "ExtremeExotics", email: "ee@email.com", image: "https:
 Vendor.create(user_name: "SnakesPlus", email: "sp@email.com", image: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 Vendor.create(user_name: "LizardsandMore", email: "lm@email.com", image: "https://images.pexels.com/photos/462680/pexels-photo-462680.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 Vendor.create(user_name: "ClassyCobras", email: "cc@email.com", image: "https://images.pexels.com/photos/814052/pexels-photo-814052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+Vendor.create(user_name: "j", email: "j", image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
 
 images.each do |link|
   names = names.shuffle
