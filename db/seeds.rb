@@ -12,6 +12,10 @@ text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra 
 
 Vendor.destroy_all
 Listing.destroy_all
+Event.destroy_all
+
+require 'nokogiri'
+require 'open-uri'
 
 Vendor.create(user_name: "ExtremeExotics", email: "ee@email.com", image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 Vendor.create(user_name: "SnakesPlus", email: "sp@email.com", image: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
@@ -26,7 +30,49 @@ end
 
 
 
+def getEventUrls
+  urls = []
+  page = 0
+  number = 0
+  8.times do |count|
+    url = "http://www.reptilesmagazine.com/Reptile-Events-Calendar/index.php?cpevents=#{count}&sievents=" + number.to_s
+    urls.push url
+    page += 1
+    number += 10
+  end
+  return urls
+end
 
+
+
+def getEvents(url)
+  index = Nokogiri::HTML(open(url))
+
+  index.css(".event-detail").each do |element|
+    show = Nokogiri::HTML(open(element.css("a").map { |link| link['href'] }.join.to_s))
+    show.css(".event").each do |element|
+      name = element.css("h2").text
+      location = element.css(".event-location").text.gsub("View map", "").split(" ").join(" ")
+
+      hours = element.css("h4").text.split(" ")[3..6]
+      hours = hours.join(" ") + " PM"
+      if hours.include? "AM"
+        date = element.css("h4").text.split(" ")[0..2]
+        date = date.join(" ")
+      else
+        date = element.css("h4").text.split(" ")[0..6].join(" ")
+        hours = hours = element.css("h4").text.split(" ")[7..10].join(" ") + " PM"
+      end
+      cost = element.css("h3").find {|h3| h3.text.include? "Cost"}.next_element.text
+      Event.create(name: name, location: location, date: date, hours: hours, cost: cost)
+    end
+  end
+end
+urls = getEventUrls
+
+urls.each do |url|
+  getEvents(url)
+end
 # Listing.create(name: "Scrub Python", description: "Very gentle", price: 400, image: "https://upload.wikimedia.org/wikipedia/commons/e/e8/High-Yellow_Sorong_Amethystine_Scrub_Python.jpg", Vendor.all.shuffle[0].id)
 # Listing.create(name: "Green Anaconda", description: "Very gentle", price: 400, image: "http://gallery.kingsnake.com/data/7474Ana8-med.jpg", Vendor.all.shuffle[0].id)
 # Listing.create(name: "Reticulated Python", description: "Very gentle", price: 400, image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Python_reticulatus_%D1%81%D0%B5%D1%82%D1%87%D0%B0%D1%82%D1%8B%D0%B9_%D0%BF%D0%B8%D1%82%D0%BE%D0%BD-2.jpg/1200px-Python_reticulatus_%D1%81%D0%B5%D1%82%D1%87%D0%B0%D1%82%D1%8B%D0%B9_%D0%BF%D0%B8%D1%82%D0%BE%D0%BD-2.jpg", vendor_id: 3)
