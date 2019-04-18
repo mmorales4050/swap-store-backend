@@ -64,7 +64,15 @@ def getEvents(url)
         hours = hours = element.css("h4").text.split(" ")[7..10].join(" ") + " PM"
       end
       cost = element.css("h3").find {|h3| h3.text.include? "Cost"}.next_element.text
-      Event.create(name: name, location: location, date: date, hours: hours, cost: cost)
+      begin
+        url = element.css("h4").find {|h3| h3.text.include? "Website"}.next_element.css("a").map { |link| link['href'] }.join.to_s
+      rescue
+      end
+      begin
+        number = element.css("h4").find {|h3| h3.text.include? "Phone"}.next_element.text
+      rescue
+      end
+      Event.create(name: name, location: location, date: date, hours: hours, cost: cost, number: number, url: url)
     end
   end
 end

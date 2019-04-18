@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20190418171527) do
     t.string "date"
     t.string "hours"
     t.string "cost"
+    t.string "number"
+    t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

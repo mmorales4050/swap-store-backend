@@ -6,6 +6,8 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :date
       t.string :hours
       t.string :cost
+      t.string :number
+      t.string :url
 
       t.timestamps
     end
